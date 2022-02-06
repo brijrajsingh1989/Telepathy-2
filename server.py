@@ -19,7 +19,7 @@ def CheckInput(input):
     return expression, 200
 
 @app.route('/Ping')
-def Brij():
+def Ping():
     return jsonify({'response':'ok'})
 
 @app.route('/GetPreorderTraversal', methods=['POST'])
