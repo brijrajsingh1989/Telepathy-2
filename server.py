@@ -14,7 +14,13 @@ def CheckInput(input):
     ValidateExpressionObj = ValidateExpression(expression)
     if not ValidateExpressionObj.ValidateExpression():
         return jsonify({'error':'invalid expression'}), 500
+    expression = expression.replace('÷','/')
+    expression = expression.replace('×', '*')
     return expression, 200
+
+@app.route('/Ping')
+def Brij():
+    return jsonify({'response':'ok'})
 
 @app.route('/GetPreorderTraversal', methods=['POST'])
 def GetPreorderTraversal():
