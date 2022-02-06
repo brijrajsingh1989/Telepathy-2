@@ -5,15 +5,16 @@ class ExpressionTree():
 
     def __init__(self, expression):
         self.Expression = expression
+        self.RootNode = self.GetRootNode(expression)
         self.ExpressionTreePostOrderTraversal = []
         self.ExpressionTreePreOrderTraversal = []
         self.ExpressionTreeInOrderTraversal = []
 
-    def GetRootNode(self):
+    def GetRootNode(self, exp):
         def compute(operands, operators):
             right, left = operands.pop(), operands.pop()
             operands.append(Node(val=operators.pop(), left=left, right=right))
-        exp = self.Expression
+
         precedence = {'+':0, '-':0, '*':1, '/':1}
         operands, operators, operand = [], [], 0
         isSignedNumber = False
@@ -45,42 +46,36 @@ class ExpressionTree():
             compute(operands, operators)
         return operands[-1]
     
-    # def GetPostOrderTraversal(self, root):
-    #     if root == None:
-    #         return None
-    #     self.GetPostOrderTraversal(root.left)
-    #     self.GetPostOrderTraversal(root.right)
-    #     self.ExpressionTreePostOrderTraversal.append(root.val)
+    def GetPostOrderTraversal(self, root):
+        if root == None:
+            return None
+        self.GetPostOrderTraversal(root.left)
+        self.GetPostOrderTraversal(root.right)
+        self.ExpressionTreePostOrderTraversal.append(root.val)
     
-    # def GetPreOrderTraversal(self, root):
-    #     if root == None:
-    #         return None
-    #     self.ExpressionTreePreOrderTraversal.append(root.val)
-    #     self.GetPreOrderTraversal(root.left)
-    #     self.GetPreOrderTraversal(root.right)
+    def GetPreOrderTraversal(self, root):
+        if root == None:
+            return None
+        self.ExpressionTreePreOrderTraversal.append(root.val)
+        self.GetPreOrderTraversal(root.left)
+        self.GetPreOrderTraversal(root.right)
     
-    # def GetInOrderTraversal(self, root):
-    #     if root == None:
-    #         return None
-    #     self.GetPreOrderTraversal(root.left)
-    #     self.ExpressionTreeInOrderTraversal.append(root.val)
-    #     self.GetPreOrderTraversal(root.right)
+    def GetInOrderTraversal(self, root):
+        if root == None:
+            return None
+        self.GetInOrderTraversal(root.left)
+        self.ExpressionTreeInOrderTraversal.append(root.val)
+        self.GetInOrderTraversal(root.right)
         
 
-    # def PostOrderTraversal(self, exp):
-    #     e = self.ExpressionTree(exp)
-    #     rootNode = self.GetRootNode()
-    #     self.GetPostOrderTraversal(rootNode)
-    #     return self.ExpressionTreePostOrderTraversal
+    def PostOrderTraversal(self):
+        self.GetPostOrderTraversal(self.RootNode)
+        return self.ExpressionTreePostOrderTraversal
     
-    # def PreOrderTraversal(self,exp):
-    #     e = self.ExpressionTree(exp)
-    #     rootNode = self.GetRootNode()
-    #     self.GetPreOrderTraversal(rootNode)
-    #     return self.ExpressionTreePreOrderTraversal
+    def PreOrderTraversal(self):
+        self.GetPreOrderTraversal(self.RootNode)
+        return self.ExpressionTreePreOrderTraversal
     
-    # def InOrderTraversal(self,exp):
-    #     e = self.ExpressionTree(exp)
-    #     rootNode = self.GetRootNode()
-    #     self.GetInOrderTraversal(rootNode)
-    #     return self.ExpressionTreeInOrderTraversal
+    def InOrderTraversal(self):
+        self.GetInOrderTraversal(self.RootNode)
+        return self.ExpressionTreeInOrderTraversal
